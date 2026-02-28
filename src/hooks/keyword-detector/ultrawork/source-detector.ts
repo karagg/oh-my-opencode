@@ -17,7 +17,7 @@ import { isGptModel, isGeminiModel } from "../../../agents/types"
 export function isPlannerAgent(agentName?: string): boolean {
   if (!agentName) return false
   const lowerName = agentName.toLowerCase()
-  if (lowerName.includes("prometheus") || lowerName.includes("planner")) return true
+  if (lowerName.includes("prometheus") || lowerName.includes("planner") || lowerName.includes("fuxi")) return true
 
   const normalized = lowerName.replace(/[_-]+/g, " ")
   return /\bplan\b/.test(normalized)

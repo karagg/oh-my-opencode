@@ -87,6 +87,18 @@ export function applyToolConfig(params: {
       ...denyTodoTools,
     };
   }
+  const fuxi = agentByKey(params.agentResult, "fuxi");
+  if (fuxi) {
+    fuxi.permission = {
+      ...fuxi.permission,
+      call_omo_agent: "deny",
+      task: "allow",
+      question: questionPermission,
+      "task_*": "allow",
+      teammate: "allow",
+      ...denyTodoTools,
+    };
+  }
   const junior = agentByKey(params.agentResult, "sisyphus-junior");
   if (junior) {
     junior.permission = {

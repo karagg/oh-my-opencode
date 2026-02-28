@@ -3,8 +3,10 @@
 // Wrapper script that detects platform and spawns the correct binary
 
 import { spawnSync } from "node:child_process";
-import { readFileSync } from "node:fs";
+import { readFileSync, existsSync } from "node:fs";
 import { createRequire } from "node:module";
+import { fileURLToPath } from "node:url";
+import { dirname, resolve } from "node:path";
 import { getPlatformPackageCandidates, getBinaryPath } from "./platform.js";
 
 const require = createRequire(import.meta.url);
@@ -71,7 +73,37 @@ function getSignalExitCode(signal) {
   return 128 + (signalCodeByName[signal] ?? 1);
 }
 
-function main() {
+async function main() {
+  // ===== DEV MODE: bypass native binary =====
+  const currentDir = dirname(fileURLToPath(import.meta.url));
+  const devEntry = resolve(currentDir, "../dist/cli/index.js");
+
+  if (process.env.OH_MY_OPENCODE_DEV === "1" && existsSync(devEntry)) {
+    // If not running in Bun, spawn Bun to run the CLI
+    if (typeof globalThis.Bun === "undefined") {
+      console.log("⚡ DEV mode: spawning JS build with Bun");
+      const { status, signal, error } = spawnSync("bun", [devEntry, ...process.argv.slice(2)], {
+        stdio: "inherit",
+      });
+      
+      if (error) {
+        console.error(`Failed to spawn Bun: ${error.message}`);
+        process.exit(1);
+      }
+      
+      if (signal) {
+        process.exit(getSignalExitCode(signal));
+      }
+      
+      process.exit(status ?? 0);
+      return;
+    }
+
+    console.log("⚡ DEV mode: running JS build");
+    await import(devEntry);
+    return;
+  }
+
   const { platform, arch } = process;
   const libcFamily = getLibcFamily();
   const avx2Supported = supportsAvx2();

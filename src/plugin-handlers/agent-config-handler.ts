@@ -16,6 +16,7 @@ import type { PluginComponents } from "./plugin-components-loader";
 import { reorderAgentsByPriority } from "./agent-priority-order";
 import { remapAgentKeysToDisplayNames } from "./agent-key-remapper";
 import { buildPrometheusAgentConfig } from "./prometheus-agent-config-builder";
+import { buildFuxiAgentConfig } from "./fuxi-agent-config-builder";
 import { buildPlanDemoteConfig } from "./plan-model-inheritance";
 
 type AgentConfigRecord = Record<string, Record<string, unknown> | undefined> & {
@@ -166,6 +167,17 @@ export async function applyAgentConfig(params: {
       agentConfig["prometheus"] = await buildPrometheusAgentConfig({
         configAgentPlan: configAgent?.plan,
         pluginPrometheusOverride: prometheusOverride,
+        userCategories: params.pluginConfig.categories,
+        currentModel,
+      });
+
+      const fuxiOverride = params.pluginConfig.agents?.["fuxi"] as
+        | (Record<string, unknown> & { prompt_append?: string })
+        | undefined;
+
+      agentConfig["fuxi"] = await buildFuxiAgentConfig({
+        configAgentPlan: configAgent?.plan,
+        pluginFuxiOverride: fuxiOverride,
         userCategories: params.pluginConfig.categories,
         currentModel,
       });

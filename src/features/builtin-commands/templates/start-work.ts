@@ -11,7 +11,7 @@ export const START_WORK_TEMPLATE = `You are starting a Sisyphus work session.
 
 ## WHAT TO DO
 
-1. **Find available plans**: Search for Prometheus-generated plan files at \`.sisyphus/plans/\`
+14. **Find available plans**: Search for Prometheus/Fuxi-generated plan files at \`.sisyphus/plans/\`
 
 2. **Check for active boulder state**: Read \`.sisyphus/boulder.json\` if it exists
 

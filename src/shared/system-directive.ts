@@ -55,6 +55,7 @@ export const SystemDirectiveTypes = {
   COMPACTION_CONTEXT: "COMPACTION CONTEXT",
   CONTEXT_WINDOW_MONITOR: "CONTEXT WINDOW MONITOR",
   PROMETHEUS_READ_ONLY: "PROMETHEUS READ-ONLY",
+  FUXI_READ_ONLY: "FUXI READ-ONLY",
 } as const
 
 export type SystemDirectiveType = (typeof SystemDirectiveTypes)[keyof typeof SystemDirectiveTypes]

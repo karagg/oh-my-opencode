@@ -249,7 +249,7 @@ export async function applyAgentConfig(params: {
       ...filterDisabledAgents(projectAgents),
       ...filterDisabledAgents(pluginAgents),
       ...filteredConfigAgents,
-      build: { ...migratedBuild, mode: "subagent", hidden: true },
+      build: { ...migratedBuild, mode: "primary" },
       ...(planDemoteConfig ? { plan: planDemoteConfig } : {}),
     };
   } else {

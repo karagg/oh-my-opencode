@@ -17,6 +17,9 @@ import { reorderAgentsByPriority } from "./agent-priority-order";
 import { remapAgentKeysToDisplayNames } from "./agent-key-remapper";
 import { buildPrometheusAgentConfig } from "./prometheus-agent-config-builder";
 import { buildFuxiAgentConfig } from "./fuxi-agent-config-builder";
+import { buildDayuAgentConfig } from "./dayu-agent-config-builder";
+import { buildKuafuAgentConfig } from "./kuafu-agent-config-builder";
+import { buildBaizeAgentConfig } from "./baize-agent-config-builder";
 import { buildPlanDemoteConfig } from "./plan-model-inheritance";
 
 type AgentConfigRecord = Record<string, Record<string, unknown> | undefined> & {
@@ -181,7 +184,34 @@ export async function applyAgentConfig(params: {
         userCategories: params.pluginConfig.categories,
         currentModel,
       });
+
+      const dayuOverride = params.pluginConfig.agents?.["dayu"] as
+        | (Record<string, unknown> & { prompt_append?: string })
+        | undefined;
+
+      agentConfig["dayu"] = await buildDayuAgentConfig({
+        configAgentPlan: configAgent?.plan,
+        pluginDayuOverride: dayuOverride,
+        userCategories: params.pluginConfig.categories,
+        currentModel,
+      });
+
+      const baizeOverride = params.pluginConfig.agents?.["baize"];
+
+      agentConfig["baize"] = await buildBaizeAgentConfig({
+        pluginBaizeOverride: baizeOverride,
+        currentModel,
+      });
     }
+
+    const kuafuOverride = params.pluginConfig.agents?.["kuafu"] as
+      | (Record<string, unknown> & { prompt_append?: string })
+      | undefined;
+
+    agentConfig["kuafu"] = await buildKuafuAgentConfig({
+      pluginKuafuOverride: kuafuOverride,
+      currentModel,
+    });
 
     const filteredConfigAgents = configAgent
       ? Object.fromEntries(

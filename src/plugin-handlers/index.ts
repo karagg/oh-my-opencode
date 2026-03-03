@@ -8,4 +8,7 @@ export * from "./plugin-components-loader";
 export * from "./category-config-resolver";
 export * from "./prometheus-agent-config-builder";
 export * from "./fuxi-agent-config-builder";
+export * from "./dayu-agent-config-builder";
+export * from "./kuafu-agent-config-builder";
+export * from "./baize-agent-config-builder";
 export * from "./agent-priority-order";

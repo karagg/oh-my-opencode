@@ -129,7 +129,7 @@
     ├─ 状态追踪：监控各 夸父 (Kuafu) Agent 的执行进度
     └─ 结果持久化：
         ├─ 实时流式输出：将每个 Task 的执行日志实时写入文件
-        └─ 最终汇聚：所有 Task 完成后，生成统一的诊断报告存入 `~/.baize/report/{timestamp}_{plan_id}_report.md`
+        └─ 最终汇聚：所有 Task 完成后，生成统一的诊断报告存入 `~/.dayu/report/{timestamp}_{plan_id}_report.md`
 
 ### 1.3 诊断任务执行 (夸父 / Kuafu - 通用诊断执行)
 ├─ 1.3.1 通用分析 Agent (通用诊断执行)

@@ -103,6 +103,8 @@ export type OverridableAgentName =
   | "build"
   | "prometheus"
   | "fuxi"
+  | "dayu"
+  | "baize"
   | BuiltinAgentName
 
 export type AgentName = BuiltinAgentName

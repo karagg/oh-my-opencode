@@ -6,8 +6,11 @@
 export const AGENT_DISPLAY_NAMES: Record<string, string> = {
   sisyphus: "Sisyphus (Ultraworker)",
   hephaestus: "Hephaestus (Deep Agent)",
+  baize: "Baize (Root Cause Analysis)",
   prometheus: "Prometheus (Plan Builder)",
   fuxi: "Fuxi (Diagnostic Planner)",
+  dayu: "Dayu (Orchestration and Scheduling)",
+  kuafu: "Kuafu (General Diagnostic Executor)",
   atlas: "Atlas (Plan Executor)",
   "sisyphus-junior": "Sisyphus-Junior",
   metis: "Metis (Plan Consultant)",
